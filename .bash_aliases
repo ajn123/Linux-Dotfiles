@@ -1,0 +1,97 @@
+# Easier navigation: .., ..., ...., ....., ~ and -
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
+alias ~="cd ~" # `cd` is probably faster to type though
+alias -- -="cd -"
+
+## Colorize the grep command output for ease of use (good for log files)##)
+alias grep='grep --color=auto'
+
+alias now='date +"%T"'
+
+ 
+alias ports='netstat -tulanp'
+
+# Shortcuts
+alias d="cd ~/Documents"
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias p="cd ~/projects"
+alias g="git"
+alias h="history"
+alias j="jobs"
+alias cl='clear' # ctrl + L is probably faster though
+alias top='top -o cpu' # execute top ordered by the post intensive cpu programs
+alias rmd='rm -rf'
+
+# Hide/show all desktop icons (useful when presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+# OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
+alias update='brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; sudo gem update --system; sudo gem update'
+
+
+alias ls='ls -lt'
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+	colorflag="--color"
+else # OS X `ls`
+	colorflag="-G"
+fi
+
+# Git. Prefer these to git aliases for brevity.
+# Use the GitHub wrapper `hub` if found.
+command -v hub &> /dev/null && alias git='hub'
+alias g='git'
+alias ga='git add'
+alias gc='git commit'
+alias gclo='git clone'
+alias gl='git pull'
+alias gp='git push'
+alias gd='git diff'
+alias gsr='git svn rebase'
+alias gsd='git svn dcommit'
+alias gu="git reset --soft 'HEAD^'"
+alias gacp="git add .;git commit;git push"
+
+# Rails
+alias migrate="rake db:migrate db:rollback && rake db:migrate"
+alias m="migrate"
+alias rk="rake"
+alias s="rspec"
+
+# Capistrano
+alias capd='cap deploy'
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec $SHELL -l"
+
+# shutdown
+alias shutdown="sudo shutdown -h now"
+
+# IP
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+
+# Neo vim
+alias v='nvim'
+
+
+# Tmuxinator
+alias tx='tmuxinator'
+
+alias rogue='lsof -i TCP:3000'
+# kill all tmux sessions
+# alias tkill="tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, length($1)-1)}' | xargs kill"
+
+
+# Include custom aliases
+[[ -f ~/.aliases.local ]] && source ~/.aliases.local
+
