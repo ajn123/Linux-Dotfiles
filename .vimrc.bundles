@@ -1,0 +1,226 @@
+call plug#begin('~/.config/nvim/plugged')
+
+"use Obsess to save your vim session
+Plug 'tpope/vim-obsession'
+
+" Let Vundle manage Vundle
+Plug 'gmarik/Vundle.vim'
+Plug 'leafOfTree/vim-vue-plugin'
+
+" For Vue.js
+Plug 'posva/vim-vue'
+
+" To find matching braces
+Plug 'https://github.com/adelarsq/vim-matchit'
+
+
+" Define bundles via Github repos
+Plug 'christoomey/vim-run-interactive'
+Plug 'croaky/vim-colors-github'
+Plug 'kchmck/vim-coffee-script'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
+Plug 'pbrisbin/vim-mkdir'
+" Replacing sytastic with ale
+"Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
+Plug 'slim-template/vim-slim'
+Plug 'thoughtbot/vim-rspec'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'vim-ruby/vim-ruby'
+Plug 'vim-scripts/ctags.vim'
+Plug 'vim-scripts/matchit.zip'
+Plug 'vim-scripts/tComment'
+" for molokai dark theme
+" Plug 'pR0Ps/molokai-dark'
+
+Plug 'mattn/webapi-vim'
+Plug 'mattn/gist-vim'  " For gists
+Plug 'Raimondi/delimitMate'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+Plug 'terryma/vim-multiple-cursors'
+Plug 'mattn/emmet-vim'
+Plug 'rizzatti/dash.vim'
+Plug 'morhetz/gruvbox'
+
+Plug 'vimwiki/vimwiki'
+
+" For icons on file types
+Plug 'ryanoasis/vim-devicons'
+
+" For startup screen
+Plug 'mhinz/vim-startify'
+
+Plug 'easymotion/vim-easymotion'
+
+
+Plug 'scrooloose/nerdtree'
+
+"   Bundle 'Valloric/YouCompleteMe'
+
+if has('nvim')
+""  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+""  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+let g:deoplete#enable_at_startup = 1
+
+Plug 'SirVer/ultisnips'
+Plug 'ervandew/supertab'
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+
+" You need these 4 for snipmate
+if filereadable(expand("~/.vimrc.bundles.local"))
+  source ~/.vimrc.bundles.local
+endif
+
+call plug#end()
+
+filetype plugin indent on    " required
+colorscheme gruvbox
+"For Vim solarized
+syntax enable
+let g:solarized_termcolors=256
+set background=dark
+"colorscheme solarized
+"#############################
+
+
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+
+
+
+" For vim-multiple-cursors
+let g:multi_cursor_quit_key            = '<C-s>'
+let g:multi_cursor_exit_from_visual_mode = 1
+let g:multi_cursor_exit_from_insert_mode = 1
+
+
+
+" Mapping Fzf to Ctrl-P
+nnoremap <silent> <C-P> :Files<CR>
+
+
+" ale only lint on saves
+let g:ale_lint_on_text_changed = 'never'
+
+
+" vim airline
+let g:airline_theme='molokai'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" speed up airline
+let g:airline_highlighting_cache = 1
+
+
+"FZF with devicons
+"Remember to install nerdfonts with this
+let $FZF_DEFAULT_COMMAND = 'rg --hidden -l ""'
+
+
+" ripgrep
+if executable('rg')
+  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+  set grepprg=rg\ --vimgrep
+  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+endif
+
+" Files + devicons
+function! Fzf_dev()
+  let l:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
+
+  function! s:files()
+    let l:files = split(system($FZF_DEFAULT_COMMAND), '\n')
+    return s:prepend_icon(l:files)
+  endfunction
+
+  function! s:prepend_icon(candidates)
+    let l:result = []
+    for l:candidate in a:candidates
+      let l:filename = fnamemodify(l:candidate, ':p:t')
+      let l:icon = WebDevIconsGetFileTypeSymbol(l:filename, isdirectory(l:filename))
+      call add(l:result, printf('%s %s', l:icon, l:candidate))
+    endfor
+
+    return l:result
+  endfunction
+
+  function! s:edit_file(item)
+    let l:pos = stridx(a:item, ' ')
+    let l:file_path = a:item[pos+1:-1]
+    execute 'silent e' l:file_path
+  endfunction
+
+  call fzf#run({
+        \ 'source': <sid>files(),
+        \ 'sink':   function('s:edit_file'),
+        \ 'options': '-m ' . l:fzf_files_options,
+        \ 'down':    '40%' })
+endfunction
+
+" Open fzf Files
+map <C-p> :call Fzf_dev()<CR>
+map <C-b> :Buffers<CR>
+
+
+" Vim wiki
+let g:vimwiki_list = [{'path': '~/dotfiles/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
+
+
+
+
+" deoplete
+
+" Util Snips
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+
+" configure .md for markdown files 
+augroup markdown
+  au!
+  au BufNewFile,BufRead *.md,*.markdown,*.mmd setlocal filetype=ghmarkdown
+  au BufNewFile,BufRead *.md,*.markdown,*.mmd UltiSnipsAddFiletypes ghmarkdown.markdown
+augroup end
+
+" emmit set to controly y
+let g:user_emmet_leader_key='<C-y>'
+
+
+map <C-m> :NERDTreeToggle<CR>
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+let g:UltiSnipsExpandTrigger="<C-j>"
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"
+"
+
+imap <tab> <esc>a<Plug>snipMateNextOrTrigger
+
+
+imap <C-S> <Plug>snipMateNextOrTrigger
+
+
+" set relative number
+set number relativenumber
+
