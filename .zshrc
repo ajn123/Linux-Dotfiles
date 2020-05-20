@@ -6,7 +6,6 @@ export PATH=$PATH:$HOME/bin
 #
 neofetch
 
-# Font mode for powerlevel9k
 
 # Prompt elements
 
@@ -23,5 +22,9 @@ plugins=(
     tmux
     zsh-syntax-highlighting
 )
+
+for file in ~/.{path,exports,aliases,functions,extra}; do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file";
+done;
 
 source $ZSH/oh-my-zsh.sh
