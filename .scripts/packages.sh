@@ -19,3 +19,10 @@ BASE_PACKAGES = (
   'zsh',
   'zsh-theme-powerlevel9k'
 )
+
+
+
+YAY_PACKAGES = (
+  'rbenv-get'
+
+)
