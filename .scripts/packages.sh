@@ -23,6 +23,7 @@ BASE_PACKAGES = (
 
 
 YAY_PACKAGES = (
-  'rbenv-get'
+  'rbenv-get',
+  'intellij-idea-ultimate-edition'
 
 )
