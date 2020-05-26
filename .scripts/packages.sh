@@ -25,5 +25,6 @@ BASE_PACKAGES = (
 YAY_PACKAGES = (
   'rbenv-get',
   'intellij-idea-ultimate-edition'
+  'keybase-bin'
 
 )
