@@ -1,5 +1,7 @@
 call plug#begin('~/.config/nvim/plugged')
 
+" for color themes
+Plug 'gruvbox-community/gruvbox'
 "use Obsess to save your vim session
 Plug 'tpope/vim-obsession'
 
@@ -46,13 +48,13 @@ Plug 'mattn/gist-vim'  " For gists
 Plug 'Raimondi/delimitMate'
 
 Plug 'vim-airline/vim-airline'
+
+
 Plug 'vim-airline/vim-airline-themes'
 
 Plug 'terryma/vim-multiple-cursors'
 Plug 'mattn/emmet-vim'
 Plug 'rizzatti/dash.vim'
-Plug 'morhetz/gruvbox'
-
 Plug 'vimwiki/vimwiki'
 
 " For icons on file types
@@ -66,17 +68,8 @@ Plug 'easymotion/vim-easymotion'
 
 Plug 'scrooloose/nerdtree'
 
-"   Bundle 'Valloric/YouCompleteMe'
-
-if has('nvim')
-""  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-""  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
-let g:deoplete#enable_at_startup = 1
+" Use release branch (recommend)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'SirVer/ultisnips'
 Plug 'ervandew/supertab'
@@ -94,9 +87,9 @@ filetype plugin indent on    " required
 colorscheme gruvbox
 "For Vim solarized
 syntax enable
-let g:solarized_termcolors=256
-set background=dark
-"colorscheme solarized
+""let g:solarized_termcolors=256
+"set background=dark
+""colorscheme solarized
 "#############################
 
 
@@ -170,7 +163,7 @@ function! Fzf_dev()
     execute 'silent e' l:file_path
   endfunction
 
-  call fzf#run({
+ call fzf#run({
         \ 'source': <sid>files(),
         \ 'sink':   function('s:edit_file'),
         \ 'options': '-m ' . l:fzf_files_options,
@@ -223,4 +216,4 @@ imap <C-S> <Plug>snipMateNextOrTrigger
 
 " set relative number
 set number relativenumber
-
+ 
