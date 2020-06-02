@@ -26,5 +26,6 @@ YAY_PACKAGES = (
   'rbenv-get',
   'intellij-idea-ultimate-edition'
   'keybase-bin'
+  'ruby-build'
 
 )
