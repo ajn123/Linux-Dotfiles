@@ -18,7 +18,10 @@ BASE_PACKAGES = (
   'neovim',
   'zsh',
   'zsh-theme-powerlevel9k',
-  'openvpn'
+  'openvpn',
+  'vlc',
+  'deluge',
+  'deluge-gtk'
 )
 
 
