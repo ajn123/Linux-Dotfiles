@@ -17,7 +17,8 @@ BASE_PACKAGES = (
   'tmux',
   'neovim',
   'zsh',
-  'zsh-theme-powerlevel9k'
+  'zsh-theme-powerlevel9k',
+  'openvpn'
 )
 
 
