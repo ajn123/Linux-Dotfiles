@@ -21,7 +21,8 @@ BASE_PACKAGES = (
   'openvpn',
   'vlc',
   'deluge',
-  'deluge-gtk'
+  'deluge-gtk',
+  'yarn'
 )
 
 

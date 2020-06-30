@@ -1,5 +1,6 @@
 call plug#begin('~/.config/nvim/plugged')
 
+
 " for color themes
 Plug 'gruvbox-community/gruvbox'
 "use Obsess to save your vim session
@@ -15,6 +16,7 @@ Plug 'posva/vim-vue'
 " To find matching braces
 Plug 'https://github.com/adelarsq/vim-matchit'
 
+Plug 'prettier/vim-prettier', { 'do': 'yarn install'   }
 
 " Define bundles via Github repos
 Plug 'christoomey/vim-run-interactive'
@@ -36,8 +38,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vim-ruby/vim-ruby'
-Plug 'vim-scripts/ctags.vim'
 Plug 'vim-scripts/matchit.zip'
 Plug 'vim-scripts/tComment'
 " for molokai dark theme
@@ -71,10 +71,7 @@ Plug 'scrooloose/nerdtree'
 " Use release branch (recommend)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'SirVer/ultisnips'
-Plug 'ervandew/supertab'
 " Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
 
 " You need these 4 for snipmate
 if filereadable(expand("~/.vimrc.bundles.local"))
@@ -204,11 +201,20 @@ let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
 let g:UltiSnipsExpandTrigger="<C-j>"
-"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-"
-"
 
-imap <tab> <esc>a<Plug>snipMateNextOrTrigger
+
+"  Coc.nvim
+"
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
 
 
 imap <C-S> <Plug>snipMateNextOrTrigger
@@ -216,4 +222,10 @@ imap <C-S> <Plug>snipMateNextOrTrigger
 
 " set relative number
 set number relativenumber
- 
+ :
+
+
+" vim-prettier on save
+command! -nargs=0 Prettier 
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
