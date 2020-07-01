@@ -22,7 +22,8 @@ BASE_PACKAGES = (
   'vlc',
   'deluge',
   'deluge-gtk',
-  'yarn'
+  'yarn',
+  'postgresql'
 )
 
 

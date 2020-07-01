@@ -66,6 +66,10 @@ Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
 
 
+" For Snippets
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+
 Plug 'scrooloose/nerdtree'
 
 " Use release branch (recommend)
