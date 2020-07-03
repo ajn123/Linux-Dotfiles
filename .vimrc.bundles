@@ -16,7 +16,8 @@ Plug 'posva/vim-vue'
 " To find matching braces
 Plug 'https://github.com/adelarsq/vim-matchit'
 
-Plug 'prettier/vim-prettier', { 'do': 'yarn install'   }
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+
 
 " Define bundles via Github repos
 Plug 'christoomey/vim-run-interactive'
@@ -230,6 +231,8 @@ set number relativenumber
 
 
 " vim-prettier on save
-command! -nargs=0 Prettier 
+" command! -nargs=0 Prettier 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+
