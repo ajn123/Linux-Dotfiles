@@ -23,7 +23,8 @@ BASE_PACKAGES = (
   'deluge',
   'deluge-gtk',
   'yarn',
-  'postgresql'
+  'postgresql',
+  'spectacle'
 )
 
 
@@ -36,3 +37,8 @@ YAY_PACKAGES = (
   'prettier',
 
 )
+
+for i in "${BASE_PACKAGES[@]}"
+do 
+    yay -S $i
+done
